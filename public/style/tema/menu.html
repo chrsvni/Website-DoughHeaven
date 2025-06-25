@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu - DoughHeaven: Heavenly Donuts & Sweet Delights</title>
+    <meta name="description" content="Explore our menu of heavenly donuts and sweet delights at DoughHeaven. Fresh, handcrafted donuts made daily with premium ingredients.">
+    <link rel="icon" type="image/png" href="https://api.dicebear.com/7.x/shapes/svg?seed=doughheaven" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/vue@3.5.13/dist/vue.global.js"></script>
+</head>
+<body class="bg-gray-50">
+    <div id="app" v-cloak>
+        <!-- Navigation -->
+        <nav class="bg-white shadow-lg fixed w-full z-50">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="flex justify-between h-16">
+                    <div class="flex items-center">
+                        <h1 class="text-2xl font-bold text-pink-600">DoughHeaven</h1>
+                    </div>
+                    <div class="hidden md:flex items-center space-x-8">
+                        <a href="index.html" class="text-gray-700 hover:text-pink-600">Home</a>
+                        <a href="story.html" class="text-gray-700 hover:text-pink-600">Story</a>
+                        <a href="menu.html" class="text-gray-700 hover:text-pink-600 border-b-2 border-pink-600">Menu</a>
+                        <a href="promos.html" class="text-gray-700 hover:text-pink-600">Promos</a>
+                        <a href="blogs.html" class="text-gray-700 hover:text-pink-600">Blog</a>
+                        <a href="contact.html" class="text-gray-700 hover:text-pink-600">Contact</a>
+                    </div>
+                    <div class="md:hidden flex items-center">
+                        <button @click="toggleMobileMenu" class="text-gray-700">
+                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path v-if="!mobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                                <path v-else stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- Mobile Menu -->
+            <div v-show="mobileMenuOpen" class="md:hidden bg-white">
+                <div class="px-2 pt-2 pb-3 space-y-1">
+                    <a href="index.html" class="block px-3 py-2 text-gray-700 hover:text-pink-600">Home</a>
+                    <a href="story.html" class="block px-3 py-2 text-gray-700 hover:text-pink-600">Story</a>
+                    <a href="menu.html" class="block px-3 py-2 text-gray-700 hover:text-pink-600 bg-pink-50">Menu</a>
+                    <a href="promos.html" class="block px-3 py-2 text-gray-700 hover:text-pink-600">Promos</a>
+                    <a href="blogs.html" class="block px-3 py-2 text-gray-700 hover:text-pink-600">Blog</a>
+                    <a href="contact.html" class="block px-3 py-2 text-gray-700 hover:text-pink-600">Contact</a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="pt-16 relative">
+            <div class="h-96 w-full bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');">
+                <div class="absolute inset-0 bg-black bg-opacity-60"></div>
+                <div class="relative h-full flex flex-col items-center justify-center text-center px-4">
+                    <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">Welcome to DoughHeaven</h1>
+                    <p class="text-xl md:text-2xl text-white">Where every bite feels like heaven.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Category Navigation -->
+        <section class="py-8 bg-white shadow-md sticky top-16 z-40">
+            <div class="container mx-auto px-4">
+                <div class="flex flex-wrap justify-center gap-4">
+                    <button 
+                        v-for="category in categories" 
+                        :key="category.id"
+                        @click="activeCategory = category.id"
+                        class="px-4 py-2 rounded-full transition-colors duration-300"
+                        :class="activeCategory === category.id ? 'bg-pink-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'"
+                    >
+                        {{ category.name }}
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Menu Items -->
+        <section class="py-16">
+            <div class="container mx-auto px-20">
+                <div v-for="category in categories" :key="'cat-'+category.id" v-show="activeCategory === category.id || activeCategory === 'all'">
+                    <h2 class="text-3xl font-bold text-center mb-12">{{ category.name }}</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div v-for="item in getMenuItemsByCategory(category.id)" :key="item.id" 
+                             class="bg-white rounded-lg shadow-lg overflow-hidden transform transition duration-300 hover:shadow-xl">
+                            <img :src="item.image" :alt="item.name" class="w-full h-64 object-cover">
+                            <div class="p-6">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h3 class="text-xl font-bold text-gray-800">{{ item.name }}</h3>
+                                    <span class="text-pink-600 font-bold">${{ item.price.toFixed(2) }}</span>
+                                </div>
+                                <p class="text-gray-600 mb-4">{{ item.description }}</p>
+                                <button class="w-full bg-pink-600 text-white py-2 rounded-lg hover:bg-pink-700 transition duration-300">
+                                    Add to Order
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-gray-900 text-white py-12">
+            <div class="max-w-6xl mx-auto px-4 text-center">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8 text-left">
+                    <div>
+                        <h3 class="text-xl font-bold text-pink-400 mb-4">DoughHeaven</h3>
+                        <p class="text-gray-400">Heavenly donuts and sweet delights made fresh daily with premium ingredients.</p>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                        <ul class="space-y-2">
+                            <li><a href="index.html" class="text-gray-400 hover:text-white">Home</a></li>
+                            <li><a href="story.html" class="text-gray-400 hover:text-white">Our Story</a></li>
+                            <li><a href="menu.html" class="text-gray-400 hover:text-white">Menu</a></li>
+                            <li><a href="promos.html" class="text-gray-400 hover:text-white">Promotions</a></li>
+                            <li><a href="contact.html" class="text-gray-400 hover:text-white">Contact Us</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4">Hours</h4>
+                        <ul class="space-y-2 text-gray-400">
+                            <li>Monday - Friday: 7am - 8pm</li>
+                            <li>Saturday: 8am - 9pm</li>
+                            <li>Sunday: 8am - 7pm</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4">Contact</h4>
+                        <ul class="space-y-2 text-gray-400">
+                            <li>123 Donut Street</li>
+                            <li>Sweet City, SC 12345</li>
+                            <li>Phone: (555) 123-4567</li>
+                            <li>Email: hello@doughheaven.com</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="pt-8 border-t border-gray-800 text-gray-400">
+                    <p>&copy; 2024 DoughHeaven. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const { createApp, ref, computed } = Vue;
+        createApp({
+            setup() {
+                const mobileMenuOpen = ref(false);
+                const activeCategory = ref('all');
+
+                const categories = ref([
+                    { id: 'all', name: 'All Donuts' },
+                    { id: 'classic', name: 'Classic Donuts' },
+                    { id: 'filled', name: 'Filled Donuts' },
+                    { id: 'combos', name: 'Combo Packages' },
+                    { id: 'specialty', name: 'Specialty Donuts' },
+                    { id: 'seasonal', name: 'Seasonal Specials' },
+                    { id: 'beverages', name: 'Beverages' }
+                ]);
+
+                const menuItems = ref([
+                    // Classic Donuts
+                    {
+                        id: 1,
+                        name: 'Classic Glazed',
+                        category: 'classic',
+                        price: 2.50,
+                        description: 'Our signature donut with the perfect balance of sweetness',
+                        image: 'https://images.unsplash.com/photo-1551024601-bec78aea704b?ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80'
+                    },
+                    {
+                        id: 2,
+                        name: 'Chocolate Glazed',
+                        category: 'classic',
+                        price: 2.75,
+                        description: 'Classic ring donut dipped in rich chocolate glaze',
+                        image: 'https://images.unsplash.com/photo-1527904324834-3bda86da6771?ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80'
+                    },
+                    {
+                        id: 3,
+                        name: 'Sugar Dusted',
+                        category: 'classic',
+                        price: 2.50,
+                        description: 'Light and fluffy donut coated in fine granulated sugar',
+                        image: 'https://images.unsplash.com/photo-1556913396-7a3c459ef68e?ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80'
+                    },
+                    {
+                        id: 4,
+                        name: 'Cinnamon Sugar',
+                        category: 'classic',
+                        price: 2.50,
+                        description: 'Warm spiced donut rolled in cinnamon sugar mixture',
+                        image: 'https://images.unsplash.com/photo-1495147466023-ac5c588e2e94?ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80'
+                    },
+                    
+                    // Filled Donuts
+                    {
+                        id: 5,
+                        name: 'Strawberry Jam',
+                        category: 'filled',
+                        price: 3.25,
+                        description: 'Soft donut filled with sweet strawberry jam and dusted with powdered sugar',
+                        image: 'https://images.unsplash.com/photo-1558301211-0d8c8ddee6ec?ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80'
+                    },
+                    {
+                        id: 6,
+                        name: 'Vanilla Custard',
+                        category: 'filled',
+                        price: 3.50,
+                        description: 'Rich vanilla bean custard filling in a sugar-coated donut',
+                        image: 'https://images.unsplash.com/photo-1533910534207-90f31029a78e?ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80'
+                    },
+                    {
+                        id: 7,
+                        name: 'Chocolate Cream',
+                        category: 'filled',
+                        price: 3.50,
+                        description: 'Decadent chocolate cream filling with chocolate glaze topping',
+                        image: 'https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80'
+                    },
+                    {
+                        id: 8,
+                        name: 'Lemon Curd',
+                        category: 'filled',
+                        price: 3.25,
+                        description: 'Tangy lemon curd filling in a powdered sugar donut',
+                        image: 'https://images.unsplash.com/photo-1556745753-b2904692b3cd?ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80'
+                    },
+                    
+                    // Specialty Donuts
+                    {
+                        id: 9,
+                        name: 'Maple Bacon',
+                        category: 'specialty',
+                        price: 4.25,
+                        description: 'Sweet maple glaze topped with crispy bacon pieces',
+                        image: 'https://images.unsplash.com/photo-1506224772180-d75b3efbe9be?ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80'
+                    },
+                    {
+                        id: 10,
+                        name: 'Chocolate Heaven',
+                        category: 'specialty',
+                        price: 3.95,
+                        description: 'Triple chocolate donut with chocolate glaze, chips, and drizzle',
+                        image: 'https://images.unsplash.com/photo-1527904324834-3bda86da6771?ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80'
+                    },
+                    {
+                        id: 11,
+                        name: 'Strawberry Bliss',
+                        category: 'specialty',
+                        price: 3.95,
+                        description: 'Sweet strawberry glaze with fresh strawberry pieces',
+                        image: 'https://images.unsplash.com/photo-1556913396-7a3c459ef68e?ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80'
+                    },
+                    {
+                        id: 12,
+                        name: 'Cookies & Cream',
+                        category: 'specialty',
+                        price: 4.25,
+                        description: 'Vanilla glaze topped with crushed chocolate cookie pieces',
+                        image: 'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80'
+                    },
+                    
+                    // Seasonal Specials
+                    {
+                        id: 13,
+                        name: 'Pumpkin Spice',
+                        category: 'seasonal',
+                        price: 4.50,
+                        description: 'Fall favorite with pumpkin spice glaze and cinnamon crumble',
+                        image: 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80'
+                    },
+                    {
+                        id: 14,
+                        name: 'Peppermint Chocolate',
+                        category: 'seasonal',
+                        price: 4.50,
+                        description: 'Holiday special with chocolate glaze and crushed peppermint',
+                        image: 'https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80'
+                    },
+                    {
+                        id: 15,
+                        name: 'Summer Berry',
+                        category: 'seasonal',
+                        price: 4.50,
+                        description: 'Mixed berry glaze with fresh seasonal berries',
+                        image: 'https://images.unsplash.com/photo-1551106652-a5bcf4b29ab6?ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80'
+                    },
+                    
+                    // Beverages
+                    {
+                        id: 16,
+                        name: 'Fresh Brewed Coffee',
+                        category: 'beverages',
+                        price: 2.75,
+                        description: 'Locally roasted premium coffee, perfect with any donut',
+                        image: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80'
+                    },
+                    {
+                        id: 17,
+                        name: 'Iced Coffee',
+                        category: 'beverages',
+                        price: 3.25,
+                        description: 'Chilled coffee served over ice with optional cream and sweetener',
+                        image: 'https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80'
+                    },
+                    {
+                        id: 18,
+                        name: 'Hot Chocolate',
+                        category: 'beverages',
+                        price: 3.50,
+                        description: 'Rich and creamy hot chocolate topped with whipped cream',
+                        image: 'https://images.unsplash.com/photo-1542990253-0d0f5be5f0ed?ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80'
+                    },
+                    
+                    // Combo Packages
+                    {
+                        id: 19,
+                        name: 'Box of 6 Donuts',
+                        category: 'combos',
+                        price: 13.95,
+                        description: 'Choose any 6 donuts from our classic and filled selections. Perfect for small gatherings!',
+                        image: 'https://images.unsplash.com/photo-1527515862127-6bbb7199bcbc?ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80'
+                    },
+                    {
+                        id: 20,
+                        name: 'Box of 12 Donuts',
+                        category: 'combos',
+                        price: 24.95,
+                        description: 'Mix and match any 12 donuts from our entire selection. Great value for donut lovers!',
+                        image: 'https://images.unsplash.com/photo-1530016555861-3d1f3f5ca94b?ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80'
+                    },
+                    {
+                        id: 21,
+                        name: 'Party Pack',
+                        category: 'combos',
+                        price: 39.95,
+                        description: 'Our party favorite with 20 assorted donuts. Perfect for office meetings or celebrations!',
+                        image: 'https://images.unsplash.com/photo-1562945431-ce2b63d5e98b?ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80'
+                    },
+                    {
+                        id: 22,
+                        name: 'Coffee & Donut Combo',
+                        category: 'combos',
+                        price: 5.95,
+                        description: 'Any classic donut paired with a medium coffee of your choice. The perfect breakfast!',
+                        image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80'
+                    }
+                ]);
+
+                const getMenuItemsByCategory = (categoryId) => {
+                    if (categoryId === 'all') {
+                        return menuItems.value;
+                    }
+                    return menuItems.value.filter(item => item.category === categoryId);
+                };
+
+                const toggleMobileMenu = () => {
+                    mobileMenuOpen.value = !mobileMenuOpen.value;
+                };
+
+                return {
+                    mobileMenuOpen,
+                    toggleMobileMenu,
+                    categories,
+                    menuItems,
+                    activeCategory,
+                    getMenuItemsByCategory
+                };
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

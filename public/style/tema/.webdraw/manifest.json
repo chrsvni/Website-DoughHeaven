@@ -1,0 +1,11 @@
+{
+  "id": "882be78d-e4fe-473e-8aea-8e034713862d",
+  "name": "DoughHeaven: Heavenly Donuts & Sweet Delights",
+  "description": "A delightful donut shop website featuring video showcase, brand story, menu gallery, exclusive promos, and contact information for the ultimate donut experience.",
+  "exclude": [
+    "/**/.webdraw/drawings",
+    "/**/.webdraw/*.json",
+    "/**/chats"
+  ],
+  "icon": "/.webdraw/assets/icon.png"
+}

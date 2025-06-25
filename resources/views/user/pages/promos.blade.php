@@ -1,0 +1,369 @@
+@extends('user.layouts.app')
+
+@section('title', 'Promos | DoughHeaven')
+@section('meta_description',
+    'Temukan berbagai promosi menarik dan diskon eksklusif di DoughHeaven. Jangan lewatkan
+    kesempatan mendapatkan donat premium dengan harga terbaik!')
+@section('meta_keywords', 'promosi DoughHeaven, diskon donat, penawaran spesial, donat murah, promo bulan ini')
+
+@section('content')
+    <!-- Hero Section -->
+    <section class="pt-16">
+        <div class="relative h-96">
+            <div class="w-full h-full">
+                <img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                    alt="Delicious Donuts" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+            </div>
+            <div class="absolute inset-0 flex items-center justify-center">
+                <div class="text-center">
+                    <h2 class="text-4xl md:text-6xl font-bold text-white mb-4">Special Promotions</h2>
+                    <p class="text-xl text-white mb-8">Enjoy heavenly treats at irresistible prices</p>
+                    <a href="#promos"
+                        class="bg-pink-600 text-white px-8 py-3 rounded-full hover:bg-pink-700 transition duration-300 inline-block shadow-lg">View
+                        Offers</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container mx-auto px-4 py-16" id="promos">
+        <!-- Flash Sale Section -->
+        <section class="mb-16 px-20">
+            <div class="bg-pink-600 text-white p-8 rounded-xl shadow-lg relative overflow-hidden min-h-[400px]">
+                <div class="flash-sale-slide active flex flex-col items-center justify-center text-center h-full">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-3">Flash Sale!</h2>
+                    <h3 class="text-xl md:text-2xl font-semibold mb-4">Matcha Madness 50% Off Until Sunday!</h3>
+                    <p class="mb-4">Enjoy our premium matcha donuts at half price. Limited stock available!</p>
+                    <div class="text-2xl font-bold mb-6">Ends in 2 days!</div>
+                    <a href="#"
+                        class="bg-yellow-400 text-gray-800 px-6 py-3 rounded-full hover:bg-yellow-300 transition duration-300 inline-block font-semibold">Grab
+                        Now</a>
+                </div>
+                <div class="flash-sale-slide hidden flex flex-col items-center justify-center text-center h-full">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-3">Weekend Special!</h2>
+                    <h3 class="text-xl md:text-2xl font-semibold mb-4">Buy 1 Get 1 Free - All Chocolate Donuts</h3>
+                    <p class="mb-4">Treat yourself to our premium chocolate donuts this weekend!</p>
+                    <div class="text-2xl font-bold mb-6">Saturday & Sunday Only!</div>
+                    <a href="#"
+                        class="bg-yellow-400 text-gray-800 px-6 py-3 rounded-full hover:bg-yellow-300 transition duration-300 inline-block font-semibold">Order
+                        Now</a>
+                </div>
+                <div class="flash-sale-slide hidden flex flex-col items-center justify-center text-center h-full">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-3">Limited Edition!</h2>
+                    <h3 class="text-xl md:text-2xl font-semibold mb-4">Durian Delight - New Flavor Launch</h3>
+                    <p class="mb-4">Try our new flavor with real durian. Available only this week!</p>
+                    <div class="text-2xl font-bold mb-6">Only 100 pieces available!</div>
+                    <a href="#"
+                        class="bg-yellow-400 text-gray-800 px-6 py-3 rounded-full hover:bg-yellow-300 transition duration-300 inline-block font-semibold">Try
+                        Now</a>
+                </div>
+                <div class="flash-sale-slide hidden flex flex-col items-center justify-center text-center h-full">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-3">Happy Hour Deal!</h2>
+                    <h3 class="text-xl md:text-2xl font-semibold mb-4">30% Off All Orders Between 2-4 PM</h3>
+                    <p class="mb-4">Enjoy special discounts for all orders during afternoon happy hours!</p>
+                    <div class="text-2xl font-bold mb-6">Every weekday!</div>
+                    <a href="#"
+                        class="bg-yellow-400 text-gray-800 px-6 py-3 rounded-full hover:bg-yellow-300 transition duration-300 inline-block font-semibold">Set
+                        Reminder</a>
+                </div>
+
+                <!-- Arrows -->
+                <div class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-20 text-white p-3 rounded-full hover:bg-opacity-40 cursor-pointer"
+                    onclick="changeSlide(-1)">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                </div>
+                <div class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-20 text-white p-3 rounded-full hover:bg-opacity-40 cursor-pointer"
+                    onclick="changeSlide(1)">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </div>
+            </div>
+        </section>
+
+        <!-- Current Deals Section -->
+        <section class="mb-16 px-20">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Current Promotions</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Our best deals to satisfy your sweet cravings</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden promo-card">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">Buy 5 Get 1 Free</h3>
+                        <p class="text-gray-600 mb-4">Buy 5 of your favorite donuts and get 1 classic donut free!</p>
+                        <a href="#"
+                            class="bg-pink-600 text-white px-4 py-2 rounded-full hover:bg-pink-700 transition duration-300 inline-block text-sm">Order
+                            Now</a>
+                        <p class="text-gray-500 text-sm mt-4">Valid until June 30, 2024</p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden promo-card">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">Friday Online Special</h3>
+                        <p class="text-gray-600 mb-4">Get 20% off all online orders every Friday!</p>
+                        <a href="#"
+                            class="bg-pink-600 text-white px-4 py-2 rounded-full hover:bg-pink-700 transition duration-300 inline-block text-sm">Order
+                            Now</a>
+                        <p class="text-gray-500 text-sm mt-4">Every Friday</p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden promo-card">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">Coffee & Donut Combo</h3>
+                        <p class="text-gray-600 mb-4">One donut and one regular coffee for only Rp25,000</p>
+                        <a href="#"
+                            class="bg-pink-600 text-white px-4 py-2 rounded-full hover:bg-pink-700 transition duration-300 inline-block text-sm">Order
+                            Now</a>
+                        <p class="text-gray-500 text-sm mt-4">Daily, 8:00 AM - 11:00 AM</p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden promo-card">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">Student Discount</h3>
+                        <p class="text-gray-600 mb-4">Show your student ID and get 10% off your order!</p>
+                        <a href="#"
+                            class="bg-pink-600 text-white px-4 py-2 rounded-full hover:bg-pink-700 transition duration-300 inline-block text-sm">Order
+                            Now</a>
+                        <p class="text-gray-500 text-sm mt-4">Valid year-round</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bundle Deals Section -->
+        <section class="mb-16" style="background-color: #faeee7" class="py-12 rounded-xl">
+            <div class="max-w-6xl mx-auto px-6 py-10">
+                <div class="text-center mb-10">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">Bundle Deals & Gift Sets</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">Perfect for sharing with friends or giving as gifts</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden promo-card">
+                        <img src="https://images.unsplash.com/photo-1622467827417-bbe6c0698746?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                            alt="Donut Box" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-800 mb-3">Share the Joy: Box of 12</h3>
+                            <p class="text-gray-600 mb-4">A box of 12 assorted donuts for only Rp89,000. Perfect for office
+                                meetings or family gatherings.</p>
+                            <a href="#"
+                                class="bg-pink-600 text-white px-4 py-2 rounded-full hover:bg-pink-700 transition duration-300 inline-block text-sm">Order
+                                Now</a>
+                            <p class="text-gray-500 text-sm mt-4">Valid until July 31, 2024</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden promo-card">
+                        <img src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                            alt="Gift Box" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-800 mb-3">Premium Gift Box</h3>
+                            <p class="text-gray-600 mb-4">Elegant gift box with 6 premium donuts and a personalized
+                                greeting card.</p>
+                            <a href="#"
+                                class="bg-pink-600 text-white px-4 py-2 rounded-full hover:bg-pink-700 transition duration-300 inline-block text-sm">Order
+                                Now</a>
+                            <p class="text-gray-500 text-sm mt-4">Available year-round</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Loyalty & Birthday Section -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16 px-20">
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                <div class="p-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Loyalty Program</h2>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="bg-pink-100 p-2 rounded-full mr-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-pink-600" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-lg mb-1">Stamp Collection</h3>
+                                <p class="text-gray-600">Collect 10 stamps and get one donut free!</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="bg-pink-100 p-2 rounded-full mr-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-pink-600" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-lg mb-1">DoughHeaven Club</h3>
+                                <p class="text-gray-600">Join our club and earn points with every purchase.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#"
+                        class="mt-6 bg-pink-600 text-white px-6 py-2 rounded-full hover:bg-pink-700 transition duration-300 inline-block">Join
+                        Now</a>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                <div class="p-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Birthday Treats</h2>
+                    <div class="flex items-start">
+                        <div class="bg-pink-100 p-2 rounded-full mr-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-pink-600" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.701 2.701 0 00-1.5-.454M9 6v2m3-2v2m3-2v2M9 3h.01M12 3h.01M15 3h.01M21 21v-7a2 2 0 00-2-2H5a2 2 0 00-2 2v7h18zm-3-9v-2a2 2 0 00-2-2H8a2 2 0 00-2 2v2h12z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg mb-1">Free Birthday Donut</h3>
+                            <p class="text-gray-600 mb-4">Celebrate your special day with a free donut of your choice! Just
+                                show your ID and follow our social media accounts.</p>
+                            <a href="#"
+                                class="bg-pink-600 text-white px-4 py-2 rounded-full hover:bg-pink-700 transition duration-300 inline-block text-sm">Learn
+                                More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Collaboration Section -->
+        <section class="mb-16 px-20">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Special Collaborations & Events</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Exciting partnerships and limited-time events</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden promo-card">
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-xl font-bold text-gray-800">DoughHeaven x KopiKita</h3>
+                            <span class="bg-yellow-400 text-yellow-800 text-xs px-3 py-1 rounded-full">Partnership</span>
+                        </div>
+                        <p class="text-gray-600 mb-4">Purchase any donut at DoughHeaven and receive a 30% discount voucher
+                            for coffee at KopiKita.</p>
+                        <a href="#"
+                            class="bg-pink-600 text-white px-4 py-2 rounded-full hover:bg-pink-700 transition duration-300 inline-block text-sm">Get
+                            Voucher</a>
+                        <p class="text-gray-500 text-sm mt-4">Valid until August 15, 2024</p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden promo-card">
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-xl font-bold text-gray-800">Mall A Pop-up Store</h3>
+                            <span class="bg-green-400 text-green-800 text-xs px-3 py-1 rounded-full">Event</span>
+                        </div>
+                        <p class="text-gray-600 mb-4">Visit our pop-up store at Mall A and enjoy free samples all day long!
+                        </p>
+                        <a href="#"
+                            class="bg-pink-600 text-white px-4 py-2 rounded-full hover:bg-pink-700 transition duration-300 inline-block text-sm">See
+                            Location</a>
+                        <p class="text-gray-500 text-sm mt-4">June 25-26, 2024</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Terms & Conditions -->
+        <section class="mb-16 px-20">
+            <div class="rounded-xl p-6" style="background-color: #faeee7">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Terms & Conditions</h2>
+                <details class="cursor-pointer">
+                    <summary class="font-semibold text-lg mb-4 text-gray-700 hover:text-pink-600 transition duration-300">
+                        Click to view terms and conditions</summary>
+                    <ul class="list-disc pl-6 space-y-2 text-gray-600">
+                        <li>Promotions are valid only at participating DoughHeaven outlets</li>
+                        <li>Promotions cannot be combined with other offers</li>
+                        <li>All offers are subject to availability</li>
+                        <li>DoughHeaven reserves the right to modify terms and conditions without prior notice</li>
+                        <li>All decisions made by DoughHeaven management are final</li>
+                    </ul>
+                </details>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Flash Sale Slideshow
+        let slideIndex = 0;
+
+        function changeSlide(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function showSlides(n) {
+            let slides = document.getElementsByClassName("flash-sale-slide");
+            if (n >= slides.length) {
+                slideIndex = 0
+            }
+            if (n < 0) {
+                slideIndex = slides.length - 1
+            }
+
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].classList.remove("active");
+            }
+            slides[slideIndex].classList.add("active");
+        }
+
+        // Auto change slides
+        setInterval(() => {
+            changeSlide(1);
+        }, 5000);
+
+        const {
+            createApp,
+            ref
+        } = Vue;
+        createApp({
+            setup() {
+                const mobileMenuOpen = ref(false);
+
+                const toggleMobileMenu = () => {
+                    mobileMenuOpen.value = !mobileMenuOpen.value;
+                };
+
+                return {
+                    mobileMenuOpen,
+                    toggleMobileMenu
+                };
+            }
+        }).mount('#app');
+
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.flash-sale-slide');
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('hidden', i !== index);
+            });
+        }
+
+        function changeSlide(direction) {
+            currentSlide = (currentSlide + direction + slides.length) % slides.length;
+            showSlide(currentSlide);
+        }
+
+        // Optional: auto-slide every 6 seconds
+        // setInterval(() => changeSlide(1), 6000);
+    </script>
+@endsection
