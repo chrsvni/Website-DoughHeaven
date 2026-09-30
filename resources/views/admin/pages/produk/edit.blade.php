@@ -1,94 +1,170 @@
 @extends('admin.layouts.app')
 
 @section('content')
-    <div class="container-fluid">
-        <h4 class="page-title mt-4">Edit Produk</h4>
+    <div class="container-fluid p-0">
+        <div class="admin-page-header">
+            <div>
+                <h2>Edit Produk: {{ $produk->nama_produk }}</h2>
+                <p>Perbarui informasi, harga, kategori, atau foto produk DoughHeaven ini.</p>
+            </div>
+            <div>
+                <a href="{{ route('produk.index') }}" class="btn btn-outline-secondary" style="border-radius: 10px; font-weight: 600;">
+                    <i class="bi bi-arrow-left mr-1"></i> Kembali ke Produk
+                </a>
+            </div>
+        </div>
+
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-12">
                 <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">Form Edit Produk</div>
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <div class="card-title">
+                            <i class="bi bi-pencil-square mr-2" style="color: #e75b7a;"></i>
+                            Formulir Edit Produk
+                        </div>
+                        <span class="text-muted" style="font-size: 13px;">Semua kolom bertanda <span class="text-danger">*</span> wajib diisi</span>
                     </div>
+
                     <form action="{{ route('produk.update', $produk->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="card-body">
-                            <div class="form-group">
-                                <label for="nama_produk">Nama Produk</label>
-                                <input type="text" name="nama_produk" class="form-control" id="nama_produk"
-                                    value="{{ old('nama_produk', $produk->nama_produk) }}"
-                                    placeholder="Masukkan nama produk">
-                                @error('nama_produk')
-                                    <small class="form-text text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
+                            <div class="row">
+                                <!-- Kolom Kiri: Data Utama Produk -->
+                                <div class="col-lg-7 pr-lg-4">
+                                    <div class="form-group mb-3">
+                                        <label for="nama_produk">Nama Produk <span class="text-danger">*</span></label>
+                                        <input type="text" name="nama_produk" class="form-control @error('nama_produk') is-invalid @enderror"
+                                            id="nama_produk" value="{{ old('nama_produk', $produk->nama_produk) }}"
+                                            placeholder="Contoh: Strawberry Glaze Donut" required>
+                                        @error('nama_produk')
+                                            <small class="text-danger font-weight-bold">{{ $message }}</small>
+                                        @enderror
+                                    </div>
 
-                            <div class="form-group">
-                                <label for="kategori_id">Kategori</label>
-                                <select name="kategori_id" class="form-control" id="kategori_id">
-                                    <option value="">-- Pilih Kategori --</option>
-                                    @foreach ($kategoris as $kategori)
-                                        <option value="{{ $kategori->id }}"
-                                            {{ old('kategori_id', $produk->kategori_id) == $kategori->id ? 'selected' : '' }}>
-                                            {{ $kategori->nama_kategori }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('kategori_id')
-                                    <small class="form-text text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group mb-3">
+                                                <label for="kategori_id">Kategori Produk <span class="text-danger">*</span></label>
+                                                <select name="kategori_id" id="kategori_id" class="form-control @error('kategori_id') is-invalid @enderror" required>
+                                                    <option value="">-- Pilih Kategori --</option>
+                                                    @foreach ($kategoris as $kategori)
+                                                        <option value="{{ $kategori->id }}"
+                                                            {{ old('kategori_id', $produk->kategori_id) == $kategori->id ? 'selected' : '' }}>
+                                                            {{ $kategori->nama_kategori }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                @error('kategori_id')
+                                                    <small class="text-danger font-weight-bold">{{ $message }}</small>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group mb-3">
+                                                <label for="harga">Harga Satuan <span class="text-danger">*</span></label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">Rp</span>
+                                                    </div>
+                                                    <input type="number" name="harga" class="form-control @error('harga') is-invalid @enderror"
+                                                        id="harga" value="{{ old('harga', $produk->harga) }}" placeholder="Contoh: 15000" required>
+                                                </div>
+                                                @error('harga')
+                                                    <small class="text-danger font-weight-bold">{{ $message }}</small>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
 
-                            <div class="form-group">
-                                <label for="harga">Harga</label>
-                                <input type="number" name="harga" class="form-control" id="harga"
-                                    value="{{ old('harga', $produk->harga) }}" placeholder="Masukkan harga">
-                                @error('harga')
-                                    <small class="form-text text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
+                                    <div class="form-group mb-3 mb-lg-0">
+                                        <label for="deskripsi">Deskripsi Produk <span class="text-danger">*</span></label>
+                                        <textarea name="deskripsi" class="form-control @error('deskripsi') is-invalid @enderror"
+                                            id="deskripsi" rows="4" placeholder="Deskripsi produk donat..." required>{{ old('deskripsi', $produk->deskripsi) }}</textarea>
+                                        @error('deskripsi')
+                                            <small class="text-danger font-weight-bold">{{ $message }}</small>
+                                        @enderror
+                                    </div>
+                                </div>
 
-                            <div class="form-group">
-                                <label for="deskripsi">Deskripsi</label>
-                                <textarea name="deskripsi" class="form-control" id="deskripsi" rows="4" placeholder="Deskripsi produk...">{{ old('deskripsi', $produk->deskripsi) }}</textarea>
-                                @error('deskripsi')
-                                    <small class="form-text text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
+                                <!-- Kolom Kanan: Rekomendasi, Foto & Aksi -->
+                                <div class="col-lg-5 pl-lg-4 border-left-lg">
+                                    <div class="form-group mb-3">
+                                        <label for="rekomendasi">Level Rekomendasi</label>
+                                        <select name="rekomendasi" id="rekomendasi" class="form-control">
+                                            <option value="none"
+                                                {{ old('rekomendasi', $produk->rekomendasi ?? 'none') == 'none' ? 'selected' : '' }}>
+                                                Tidak Ada
+                                            </option>
+                                            <option value="rekomendasi"
+                                                {{ old('rekomendasi', $produk->rekomendasi ?? '') == 'rekomendasi' ? 'selected' : '' }}>
+                                                ⭐ Rekomendasi Pilihan
+                                            </option>
+                                        </select>
+                                        <small class="form-text text-muted">Produk bertanda rekomendasi akan disorot di etalase utama.</small>
+                                    </div>
 
-                            <div class="form-group">
-                                <label for="rekomendasi">Level Rekomendasi</label>
-                                <select name="rekomendasi" id="rekomendasi" class="form-control">
-                                    <option value="none"
-                                        {{ old('rekomendasi', $produk->rekomendasi ?? 'none') == 'none' ? 'selected' : '' }}>
-                                        Tidak Ada</option>
-                                    <option value="rekomendasi"
-                                        {{ old('rekomendasi', $produk->rekomendasi ?? '') == 'rekomendasi' ? 'selected' : '' }}>
-                                        Rekomendasi</option>
-                                </select>
-                            </div>
+                                    <div class="form-group mb-4">
+                                        <label for="gambar">Foto Produk Bakery</label>
+                                        <div class="upload-dropzone text-center p-3" style="border: 2px dashed #cbd5e1; border-radius: 12px; background: #f8fafc; cursor: pointer; transition: all 0.2s;"
+                                             onclick="document.getElementById('gambar').click();">
+                                            <div id="previewContainer">
+                                                @if ($produk->gambar)
+                                                    <img id="imagePreview" src="{{ asset('storage/' . $produk->gambar) }}" alt="{{ $produk->nama_produk }}"
+                                                         style="max-height: 120px; border-radius: 10px; object-fit: cover;" class="mb-2 shadow-sm"
+                                                         onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=150&q=80';">
+                                                    <p class="mb-0 text-muted font-weight-bold" style="font-size: 12.5px;">
+                                                        <i class="bi bi-camera mr-1"></i> Klik untuk mengganti foto
+                                                    </p>
+                                                @else
+                                                    <div id="uploadPlaceholder">
+                                                        <i class="bi bi-cloud-arrow-up" style="font-size: 32px; color: #e75b7a;"></i>
+                                                        <p class="mb-1 font-weight-bold text-dark" style="font-size: 13.5px;">Klik untuk pilih foto produk</p>
+                                                        <small class="text-muted d-block" style="font-size: 12px;">Format JPG, PNG, WEBP (Maks 2MB)</small>
+                                                    </div>
+                                                    <img id="imagePreview" src="#" alt="Preview Foto"
+                                                         style="max-height: 120px; border-radius: 10px; object-fit: cover; display: none;" class="mb-2 shadow-sm">
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <input type="file" name="gambar" class="d-none @error('gambar') is-invalid @enderror"
+                                               id="gambar" accept="image/*" onchange="previewProductImage(this)">
+                                        @error('gambar')
+                                            <small class="text-danger font-weight-bold d-block mt-1">{{ $message }}</small>
+                                        @enderror
+                                    </div>
 
-
-                            <div class="form-group">
-                                <label for="gambar">Gambar Produk</label>
-                                <input type="file" name="gambar" class="form-control-file" id="gambar">
-                                @if ($produk->gambar)
-                                    <small class="form-text text-muted mt-2">Gambar saat ini:</small>
-                                    <img src="{{ asset('storage/' . $produk->gambar) }}" alt="Gambar Produk"
-                                        class="img-fluid mt-1" style="max-height: 150px;">
-                                @endif
-                                @error('gambar')
-                                    <small class="form-text text-danger">{{ $message }}</small>
-                                @enderror
+                                    <!-- Tombol Aksi Langsung Menyatu Tanpa Perlu Scroll -->
+                                    <div class="d-flex align-items-center gap-2 pt-2">
+                                        <button type="submit" class="btn btn-dh-primary flex-grow-1" style="padding: 11px 20px;">
+                                            <i class="bi bi-check-circle-fill mr-1"></i> Perbarui Produk
+                                        </button>
+                                        <a href="{{ route('produk.index') }}" class="btn btn-outline-secondary ml-2" style="border-radius: 10px; font-weight: 600; padding: 11px 20px;">
+                                            Batal
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="card-action">
-                            <button type="submit" class="btn btn-primary">Perbarui</button>
-                            <a href="{{ route('produk.index') }}" class="btn btn-danger">Batal</a>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        function previewProductImage(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const preview = document.getElementById('imagePreview');
+                    preview.src = e.target.result;
+                    preview.style.display = 'inline-block';
+                    const placeholder = document.getElementById('uploadPlaceholder');
+                    if (placeholder) placeholder.style.display = 'none';
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
 @endsection

@@ -84,4 +84,24 @@ class PromosiController extends Controller
 
         return redirect()->route('promosi.index')->with('success', 'Promosi berhasil dihapus.');
     }
+
+    /**
+     * Halaman promosi publik untuk pengunjung/user
+     */
+    public function publicPromos()
+    {
+        $promosis = Promosi::with('produks')->latest()->get();
+
+        // Ambil semua promo yang memiliki kategori Flash Sale (case-insensitive & trimmed)
+        $featuredPromos = $promosis->filter(function ($item) {
+            return strtolower(trim($item->kategori_promosi)) === 'flash sale';
+        })->values();
+
+        // Jika tidak ada promo Flash Sale sama sekali, ambil 3 promo terbaru sebagai fallback
+        if ($featuredPromos->isEmpty() && $promosis->isNotEmpty()) {
+            $featuredPromos = $promosis->take(3)->values();
+        }
+
+        return view('user.pages.promos', compact('promosis', 'featuredPromos'));
+    }
 }

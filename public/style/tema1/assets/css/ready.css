@@ -2278,12 +2278,14 @@ body {
   font-weight: 400;
   font-style: normal;
 }
+/* Broken WebKit SVG font override disabled to fix icon rendering in Chrome/Edge
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
   @font-face {
     font-family: LineAwesome;
     src: url(../fonts/line-awesome.svg?v=1.1.#fa) format("svg");
   }
 }
+*/
 .la {
   font: normal normal normal 16px/1 LineAwesome;
   font-size: inherit;

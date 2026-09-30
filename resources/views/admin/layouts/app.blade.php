@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 
 @include('admin.partials.head')
 
@@ -7,6 +7,7 @@
     <div class="wrapper">
         @include('admin.partials.navbar')
         @include('admin.partials.sidebar')
+        
         <div class="main-panel">
             <div class="content">
                 @yield('content')
@@ -15,6 +16,7 @@
             @include('admin.partials.footer')
         </div>
     </div>
+
+    @include('admin.partials.script')
 </body>
-@include('admin.partials.script')
 </html>

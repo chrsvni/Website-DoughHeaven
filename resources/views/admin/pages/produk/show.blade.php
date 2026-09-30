@@ -10,7 +10,8 @@
                         {{-- Gambar Produk --}}
                         <div class="me-md-4 mb-3 mb-md-0 text-center">
                             <img src="{{ asset('storage/' . $produk->gambar) }}" alt="{{ $produk->nama_produk }}"
-                                class="img-fluid rounded shadow-sm" style="max-width: 350px;">
+                                class="img-fluid rounded shadow-sm" style="max-width: 350px;"
+                                onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=600&q=80';">
                         </div>
 
                         {{-- Informasi Produk --}}

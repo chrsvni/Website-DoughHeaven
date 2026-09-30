@@ -48,6 +48,29 @@
                 color: #ec4899;
                 font-weight: 600;
             }
+
+            /* Sticky Category Filter Bar */
+            .sticky-filter-bar {
+                position: -webkit-sticky !important;
+                position: sticky !important;
+                top: 64px !important;
+                z-index: 45 !important;
+                background-color: #ffffff !important;
+                background: #ffffff !important;
+                border-bottom: 1px solid #fce7e7 !important;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05) !important;
+            }
+
+            /* Cross-browser Scrollbar Hiding */
+            .no-scrollbar::-webkit-scrollbar {
+                display: none !important;
+                width: 0 !important;
+                height: 0 !important;
+            }
+            .no-scrollbar {
+                -ms-overflow-style: none !important;
+                scrollbar-width: none !important;
+            }
         </style>
 
         <!-- Navigation -->
@@ -105,6 +128,32 @@
                         .length;
                 };
 
+                // Flash Sale Slider Controls
+                const flashSaleSlide = ref(0);
+                const totalFlashSales = ref({{ isset($featuredPromos) ? $featuredPromos->count() : 1 }});
+
+                const nextFlashSale = () => {
+                    if (totalFlashSales.value > 1) {
+                        flashSaleSlide.value = (flashSaleSlide.value + 1) % totalFlashSales.value;
+                    }
+                };
+
+                const prevFlashSale = () => {
+                    if (totalFlashSales.value > 1) {
+                        flashSaleSlide.value = (flashSaleSlide.value - 1 + totalFlashSales.value) % totalFlashSales.value;
+                    }
+                };
+
+                const setFlashSale = (idx) => {
+                    flashSaleSlide.value = idx;
+                };
+
+                if (totalFlashSales.value > 1) {
+                    setInterval(() => {
+                        nextFlashSale();
+                    }, 7000);
+                }
+
                 const toggleMobileMenu = () => {
                     mobileMenuOpen.value = !mobileMenuOpen.value;
                 };
@@ -121,7 +170,12 @@
                     heroSlides,
                     currentSlide,
                     nextSlide,
-                    prevSlide
+                    prevSlide,
+                    flashSaleSlide,
+                    totalFlashSales,
+                    nextFlashSale,
+                    prevFlashSale,
+                    setFlashSale
                 };
             }
         }).mount('#app');

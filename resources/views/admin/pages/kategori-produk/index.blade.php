@@ -1,57 +1,98 @@
 @extends('admin.layouts.app')
 
 @section('content')
-    <div class="container-fluid">
-        <h4 class="page-title mt-4">Manajemen Kategori Produk</h4>
+    <div class="container-fluid p-0">
+        <div class="admin-page-header">
+            <div>
+                <h2>Manajemen Kategori Produk</h2>
+                <p>Kelola kategori rasa, jenis donat, dan varian bakery di DoughHeaven.</p>
+            </div>
+            <div>
+                <a href="{{ route('kategori.create') }}" class="btn btn-dh-primary">
+                    <i class="bi bi-plus-lg mr-1"></i> Tambah Kategori
+                </a>
+            </div>
+        </div>
+
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert" style="border-radius: 12px;">
+                <i class="bi bi-check-circle-fill mr-2"></i> {{ session('success') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+
         <div class="row">
-            <div class="col-md-10">
+            <div class="col-12">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <div class="card-title">Daftar Kategori</div>
-                        <a href="{{ route('kategori.create') }}" class="btn btn-info btn-sm">+ Tambah Kategori</a>
+                        <span class="text-muted" style="font-size: 13px;">Total: {{ $kategoris->count() }} Kategori</span>
                     </div>
-                    <div class="card-body">
-                        <table class="table table-bordered table-head-bg-info table-bordered-bd-info mt-4">
-                            <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Nama Kategori</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            <tbody>
-                                @forelse ($kategoris as $kategori)
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
                                     <tr>
-                                        <th scope="row">{{ $loop->iteration }}</th>
-                                        <td>{{ $kategori->nama_kategori }}</td>
-                                        <td>
-                                            @if ($kategori->aktif)
-                                                <span class="badge badge-success">Aktif</span>
-                                            @else
-                                                <span class="badge badge-danger">Tidak Aktif</span>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            <a href="{{ route('kategori.edit', $kategori->id) }}"
-                                                class="btn btn-warning btn-sm">Edit</a>
-                                            <form action="{{ route('kategori.destroy', $kategori->id) }}" method="POST"
-                                                style="display: inline;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm"
-                                                    onclick="return confirm('Apakah Anda yakin ingin menghapus kategori ini?')">Hapus</button>
-                                            </form>
-                                        </td>
+                                        <th style="width: 70px;">#</th>
+                                        <th>Nama Kategori</th>
+                                        <th>Status Tampil</th>
+                                        <th style="width: 180px;" class="text-center">Aksi</th>
                                     </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="4" class="text-center text-muted">Belum ada data kategori.</td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @forelse ($kategoris as $kategori)
+                                        <tr>
+                                            <td class="font-weight-bold text-muted">{{ $loop->iteration }}</td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <span style="display:inline-flex; width: 32px; height: 32px; border-radius: 8px; background: #fff0f3; color: #e75b7a; align-items: center; justify-content: center; margin-right: 10px; font-weight: bold;">
+                                                        <i class="bi bi-tag"></i>
+                                                    </span>
+                                                    <span class="font-weight-bold text-dark">{{ $kategori->nama_kategori }}</span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                @if ($kategori->aktif)
+                                                    <span class="badge-pill-custom badge-success-soft">
+                                                        <i class="bi bi-check-circle-fill"></i> Aktif
+                                                    </span>
+                                                @else
+                                                    <span class="badge-pill-custom badge-danger-soft">
+                                                        <i class="bi bi-x-circle-fill"></i> Tidak Aktif
+                                                    </span>
+                                                @endif
+                                            </td>
+                                            <td class="text-center">
+                                                <div class="d-inline-flex gap-1">
+                                                    <a href="{{ route('kategori.edit', $kategori->id) }}"
+                                                        class="btn btn-warning btn-sm btn-sm-action">
+                                                        <i class="bi bi-pencil"></i> Edit
+                                                    </a>
+                                                    <form action="{{ route('kategori.destroy', $kategori->id) }}" method="POST"
+                                                        style="display: inline;" class="ml-1">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-outline-danger btn-sm btn-sm-action"
+                                                            onclick="return confirm('Apakah Anda yakin ingin menghapus kategori {{ $kategori->nama_kategori }}?')">
+                                                            <i class="bi bi-trash"></i> Hapus
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="4" class="text-center py-5 text-muted">
+                                                <i class="bi bi-inbox" style="font-size: 40px; color: #cbd5e1;"></i>
+                                                <p class="mt-2 mb-0">Belum ada data kategori produk.</p>
+                                            </td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

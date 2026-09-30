@@ -25,9 +25,7 @@ Route::get('/story', function () {
 Route::get('/menu', [MenuController::class, 'menu'])->name('menu');
 
 
-Route::get('/promos', function () {
-    return view('user.pages.promos');
-});
+Route::get('/promos', [PromosiController::class, 'publicPromos'])->name('promos');
 
 Route::get('/contact', [UlasanController::class, 'create'])->name('ulasan.create');
 Route::post('/ulasan', [UlasanController::class, 'store'])->name('ulasan.store');

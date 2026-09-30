@@ -1,51 +1,80 @@
 <div class="main-header">
-    <div class="logo-header" data-background-color="blue">
-        <a href="{{ route('dashboard.index') }}" class="logo text-black">
-            DoughHeaven
+    <div class="logo-header">
+        <a href="{{ route('dashboard.index') }}" class="logo">
+            <span style="font-size: 22px; margin-right: 6px;">🍩</span>
+            <span>DoughHeaven</span>
+            <span class="brand-badge">Admin</span>
         </a>
-        <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="#sidebar"
-            aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+        <button class="navbar-toggler sidenav-toggler ml-auto" type="button" aria-label="Toggle navigation">
+            <i class="bi bi-list" style="font-size: 24px; color: #475569;"></i>
         </button>
-        <button class="topbar-toggler more"><i class="la la-ellipsis-v"></i></button>
+        <button class="topbar-toggler more d-lg-none" type="button" aria-label="Toggle user menu">
+            <i class="bi bi-three-dots-vertical" style="font-size: 20px; color: #475569;"></i>
+        </button>
     </div>
 
-    <nav class="navbar navbar-header navbar-expand-lg" data-background-color="blue2">
-        <div class="container-fluid">
-            <!-- Search -->
-            <form class="navbar-left navbar-form nav-search mr-md-3 py-3" action="#">
-                <div class="input-group">
-                    <input type="text" placeholder="Search ..." class="form-control">
-                    <div class="input-group-append">
-                        <span class="input-group-text">
-                            <i class="la la-search search-icon"></i>
-                        </span>
-                    </div>
+    <nav class="navbar navbar-header navbar-expand-lg">
+        <div class="container-fluid d-flex align-items-center justify-content-between p-0">
+            <!-- Search Bar -->
+            <div class="d-none d-md-block">
+                <div class="admin-search-wrapper">
+                    <i class="bi bi-search search-icon"></i>
+                    <input type="text" placeholder="Cari data, produk, kategori..." class="form-control">
                 </div>
-            </form>
+            </div>
 
-            <!-- User Dropdown -->
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{ Auth::user()->name }}
-                        <i class="la la-angle-down ml-1"></i>
+            <!-- Right Actions & User Menu -->
+            <div class="d-flex align-items-center ml-auto">
+                <!-- Tombol Lihat Toko / Storefront -->
+                <a href="{{ route('home') }}" target="_blank" class="btn-storefront mr-3" title="Buka website DoughHeaven di tab baru">
+                    <i class="bi bi-shop"></i>
+                    <span class="d-none d-sm-inline">Lihat Website</span>
+                </a>
+
+                <!-- User Profile Dropdown -->
+                <div class="dropdown admin-user-nav">
+                    <a class="dropdown-toggle" href="#" id="adminUserDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div class="admin-user-avatar">
+                            {{ strtoupper(substr(Auth::user()->name ?? 'A', 0, 1)) }}
+                        </div>
+                        <div class="d-none d-md-block text-left" style="line-height: 1.2;">
+                            <div style="font-size: 13.5px; font-weight: 700; color: #1e293b;">
+                                {{ Auth::user()->name ?? 'Admin DoughHeaven' }}
+                            </div>
+                            <div style="font-size: 11.5px; color: #e75b7a; font-weight: 600;">
+                                Administrator
+                            </div>
+                        </div>
+                        <i class="bi bi-chevron-down ml-1" style="font-size: 12px; color: #94a3b8;"></i>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+
+                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-admin" aria-labelledby="adminUserDropdown">
+                        <div class="px-3 py-2 border-bottom mb-1">
+                            <p class="mb-0 font-weight-bold text-dark" style="font-size: 13px;">{{ Auth::user()->name }}</p>
+                            <small class="text-muted">{{ Auth::user()->email }}</small>
+                        </div>
+
                         <a class="dropdown-item" href="{{ route('profile.edit') }}">
-                            <i class="la la-user mr-2"></i> {{ __('Profile') }}
+                            <i class="bi bi-person text-primary"></i>
+                            <span>Pengaturan Akun</span>
                         </a>
-                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{ route('home') }}" target="_blank">
+                            <i class="bi bi-box-arrow-up-right text-info"></i>
+                            <span>Halaman Pengunjung</span>
+                        </a>
+
+                        <div class="dropdown-divider my-1"></div>
+
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-                            <button type="submit" class="dropdown-item">
-                                <i class="la la-sign-out mr-2"></i> {{ __('Log Out') }}
+                            <button type="submit" class="dropdown-item text-danger border-0 bg-transparent w-100 text-left">
+                                <i class="bi bi-box-arrow-right text-danger"></i>
+                                <span>Keluar (Logout)</span>
                             </button>
                         </form>
                     </div>
-                </li>
-            </ul>
+                </div>
+            </div>
         </div>
     </nav>
 </div>
