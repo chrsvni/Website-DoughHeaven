@@ -13,6 +13,7 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\UlasanController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SubscriberController;
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -31,6 +32,10 @@ Route::get('/promos', [PromosiController::class, 'publicPromos'])->name('promos'
 Route::get('/contact', [UlasanController::class, 'create'])->name('ulasan.create');
 Route::post('/ulasan', [UlasanController::class, 'store'])->name('ulasan.store');
 
+// Newsletter Subscription (Public)
+Route::post('/newsletter/subscribe', [SubscriberController::class, 'subscribe'])->name('newsletter.subscribe');
+Route::get('/newsletter/unsubscribe/{token}', [SubscriberController::class, 'unsubscribe'])->name('newsletter.unsubscribe');
+
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -44,6 +49,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/ulasan', [UlasanController::class, 'index'])->name('ulasan.index');
     Route::patch('/admin/ulasan/{id}/toggle', [UlasanController::class, 'toggleTampilkan'])->name('ulasan.toggle');
     Route::delete('/admin/ulasan/{id}', [UlasanController::class, 'destroy'])->name('ulasan.destroy');
+
+    // Manajemen Pelanggan (Newsletter & Broadcast)
+    Route::get('/admin/subscribers', [SubscriberController::class, 'index'])->name('subscribers.index');
+    Route::get('/admin/subscribers/broadcast', [SubscriberController::class, 'broadcastForm'])->name('subscribers.broadcast');
+    Route::post('/admin/subscribers/broadcast', [SubscriberController::class, 'sendBroadcast'])->name('subscribers.send-broadcast');
+    Route::patch('/admin/subscribers/{id}/toggle-status', [SubscriberController::class, 'toggleStatus'])->name('subscribers.toggle-status');
+    Route::delete('/admin/subscribers/{id}', [SubscriberController::class, 'destroy'])->name('subscribers.destroy');
+    Route::get('/admin/subscribers/export-csv', [SubscriberController::class, 'exportCsv'])->name('subscribers.export-csv');
 
     // Menu Khusus Super Admin: Manajemen Pengguna & Karyawan
     Route::middleware('super_admin')->group(function () {

@@ -114,6 +114,18 @@
                                         </p>
                                     </div>
 
+                                    <!-- Opsi Broadcast Newsletter -->
+                                    <div class="p-3 rounded-lg mb-3" style="background: #fff8f6; border: 1px dashed #f8b4c4;">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="kirim_newsletter" name="kirim_newsletter" value="1" checked>
+                                            <label class="custom-control-label font-weight-bold text-dark" for="kirim_newsletter" style="cursor: pointer; font-size: 13px;">
+                                                <i class="bi bi-send-fill mr-1" style="color: #e75b7a;"></i>
+                                                Kirim email siaran promo ini ke seluruh pelanggan newsletter
+                                            </label>
+                                            <small class="d-block text-muted" style="font-size: 11.5px;">Pelanggan aktif akan otomatis mendapatkan email notifikasi promo baru ini.</small>
+                                        </div>
+                                    </div>
+
                                     <!-- Tombol Aksi Langsung di Samping Tanpa Perlu Scroll -->
                                     <div class="d-flex align-items-center gap-2 pt-1">
                                         <button type="submit" class="btn btn-dh-primary flex-grow-1" style="padding: 11px 20px;">

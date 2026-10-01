@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Promosi;
 use App\Models\Produk;
+use App\Models\Subscriber;
+use App\Mail\BroadcastNewsletterMail;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 
 class PromosiController extends Controller
@@ -37,7 +41,32 @@ class PromosiController extends Controller
             $promosi->produks()->sync($request->produk_ids);
         }
 
-        return redirect()->route('promosi.index')->with('success', 'Promosi berhasil ditambahkan.');
+        // Siaran otomatis ke seluruh pelanggan aktif jika dicentang
+        $broadcastMsg = '';
+        if ($request->boolean('kirim_newsletter')) {
+            $activeSubscribers = Subscriber::active()->get();
+            $sent = 0;
+            foreach ($activeSubscribers as $sub) {
+                try {
+                    Mail::to($sub->email)->send(new BroadcastNewsletterMail(
+                        $sub,
+                        '🔥 Promo Baru: ' . $promosi->nama_promosi . '!',
+                        "Halo Sahabat Manis DoughHeaven!\n\nAda promo manis baru di DoughHeaven: " . $promosi->nama_promosi . " (" . $promosi->kategori_promosi . ").\n\n" . ($promosi->deskripsi ?: 'Segera pesan donat favoritmu sebelum promo berakhir!') . ($promosi->jatuh_tempo ? "\n\nBerlaku hingga: " . \Carbon\Carbon::parse($promosi->jatuh_tempo)->format('d M Y') : ''),
+                        route('promos'),
+                        'Lihat Promo di Website',
+                        'promo'
+                    ));
+                    $sent++;
+                } catch (\Throwable $e) {
+                    Log::error("Failed to send promo newsletter to {$sub->email}: " . $e->getMessage());
+                }
+            }
+            if ($sent > 0) {
+                $broadcastMsg = " dan email notifikasi berhasil dikirim ke {$sent} pelanggan";
+            }
+        }
+
+        return redirect()->route('promosi.index')->with('success', 'Promosi berhasil ditambahkan' . $broadcastMsg . '.');
     }
 
     public function show($id)

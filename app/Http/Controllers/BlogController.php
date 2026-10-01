@@ -3,9 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blog;
+use App\Models\Subscriber;
+use App\Mail\BroadcastNewsletterMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class BlogController extends Controller
 {
@@ -51,7 +56,32 @@ class BlogController extends Controller
 
         $blog = Blog::create($data);
 
-        return redirect()->route('blog.index')->with('success', 'Blog berhasil ditambahkan.');
+        // Siaran otomatis ke seluruh pelanggan aktif jika dicentang
+        $broadcastMsg = '';
+        if ($request->boolean('kirim_newsletter')) {
+            $activeSubscribers = Subscriber::active()->get();
+            $sent = 0;
+            foreach ($activeSubscribers as $sub) {
+                try {
+                    Mail::to($sub->email)->send(new BroadcastNewsletterMail(
+                        $sub,
+                        '📖 Cerita Baru DoughHeaven: ' . $blog->judul,
+                        "Halo Sahabat Manis DoughHeaven!\n\nKami baru saja menerbitkan cerita manis dan inspirasi baru dari dapur kami:\n\n\"" . $blog->judul . "\"\n\n" . ($blog->deskripsi ?: Str::limit(strip_tags($blog->isi_blog), 160)) . "\n\nYuk baca cerita lengkapnya langsung di website kami!",
+                        route('halblog.detail', $blog->slug),
+                        'Baca Artikel Selengkapnya',
+                        'blog'
+                    ));
+                    $sent++;
+                } catch (\Throwable $e) {
+                    Log::error("Failed to send blog newsletter to {$sub->email}: " . $e->getMessage());
+                }
+            }
+            if ($sent > 0) {
+                $broadcastMsg = " dan email notifikasi berhasil dikirim ke {$sent} pelanggan";
+            }
+        }
+
+        return redirect()->route('blog.index')->with('success', 'Blog berhasil ditambahkan' . $broadcastMsg . '.');
     }
 
     public function show($id)

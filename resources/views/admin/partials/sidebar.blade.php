@@ -63,6 +63,14 @@
                     <p>Ulasan Pelanggan</p>
                 </a>
             </li>
+            @if (!Auth::user()->isSuperAdmin())
+                <li class="nav-item {{ request()->routeIs('subscribers.*') ? 'active' : '' }}">
+                    <a href="{{ route('subscribers.index') }}">
+                        <i class="bi bi-envelope-heart-fill"></i>
+                        <p>Kelola Pelanggan</p>
+                    </a>
+                </li>
+            @endif
         </ul>
 
         @if (Auth::user()->isSuperAdmin())
@@ -73,6 +81,12 @@
                     <a href="{{ route('users.index') }}">
                         <i class="bi bi-people-fill"></i>
                         <p>Kelola Pengguna</p>
+                    </a>
+                </li>
+                <li class="nav-item {{ request()->routeIs('subscribers.*') ? 'active' : '' }}">
+                    <a href="{{ route('subscribers.index') }}">
+                        <i class="bi bi-envelope-heart-fill"></i>
+                        <p>Kelola Pelanggan</p>
                     </a>
                 </li>
             </ul>

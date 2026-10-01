@@ -75,6 +75,10 @@
                                 <i class="bi bi-people-fill" style="color: #be185d;"></i>
                                 <span>Kelola Pengguna</span>
                             </a>
+                            <a class="dropdown-item" href="{{ route('subscribers.index') }}">
+                                <i class="bi bi-envelope-heart-fill" style="color: #be185d;"></i>
+                                <span>Kelola Pelanggan</span>
+                            </a>
                         @endif
 
                         <a class="dropdown-item" href="{{ route('home') }}" target="_blank">

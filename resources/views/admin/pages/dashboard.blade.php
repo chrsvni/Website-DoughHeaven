@@ -95,6 +95,39 @@
         </div>
     </div>
 
+    @if (Auth::user()->isSuperAdmin())
+    <!-- Section Khusus Super Administrator -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm" style="border-radius: 16px; background: linear-gradient(135deg, #fff5f7 0%, #ffffff 100%); border-left: 5px solid #be185d !important;">
+                <div class="card-body p-4">
+                    <div class="d-flex flex-wrap align-items-center justify-content-between">
+                        <div class="mb-3 mb-md-0">
+                            <span class="badge badge-pill-custom" style="background: #fdf2f8; color: #be185d; font-size: 11px; padding: 4px 10px; font-weight: 700;">
+                                <i class="bi bi-shield-fill-check mr-1"></i> PANEL SUPER ADMINISTRATOR
+                            </span>
+                            <h4 class="font-weight-bold text-dark mt-2 mb-1" style="font-size: 18px;">
+                                Pusat Kendali Akses & Pelanggan DoughHeaven
+                            </h4>
+                            <p class="text-muted mb-0" style="font-size: 13.5px;">
+                                Kelola hak akses akun staf karyawan serta kelola basis data audiens pelanggan newsletter dan siaran email berkala.
+                            </p>
+                        </div>
+                        <div class="d-flex align-items-center flex-wrap gap-2">
+                            <a href="{{ route('users.index') }}" class="btn mr-2 mb-2 mb-sm-0" style="background: #be185d; color: #ffffff; border-radius: 10px; font-weight: 600; font-size: 13px; padding: 9px 18px; box-shadow: 0 4px 12px rgba(190, 24, 93, 0.2);">
+                                <i class="bi bi-people-fill mr-1.5"></i> Kelola Pengguna ({{ $jumlahPengguna }})
+                            </a>
+                            <a href="{{ route('subscribers.index') }}" class="btn" style="background: #e75b7a; color: #ffffff; border-radius: 10px; font-weight: 600; font-size: 13px; padding: 9px 18px; box-shadow: 0 4px 12px rgba(231, 91, 122, 0.2);">
+                                <i class="bi bi-envelope-heart-fill mr-1.5"></i> Kelola Pelanggan ({{ $jumlahPelanggan }})
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
+
     <!-- Quick Actions Row -->
     <div class="row mb-4">
         <div class="col-12">
@@ -224,14 +257,16 @@
                             </div>
                             <small class="text-muted">{{ Auth::user()->email }}</small>
                             <div>
-                                <span class="badge badge-pill-custom badge-info-soft mt-1">Super Administrator</span>
+                                <span class="badge badge-pill-custom mt-1" style="{{ Auth::user()->isSuperAdmin() ? 'background: #fdf2f8; color: #be185d;' : 'background: #e0f2fe; color: #0284c7;' }} font-weight: 700; font-size: 11.5px; padding: 4px 10px;">
+                                    {{ Auth::user()->role_label }}
+                                </span>
                             </div>
                         </div>
                     </div>
                     <hr style="border-color: #f1f5f9;">
                     <div class="d-flex justify-content-between py-2 text-muted" style="font-size: 13px;">
                         <span>Peran Akses</span>
-                        <strong class="text-dark">Owner / Admin</strong>
+                        <strong class="text-dark">{{ Auth::user()->isSuperAdmin() ? 'Super Administrator (Full Hak Akses)' : 'Staff Admin Toko' }}</strong>
                     </div>
                     <div class="d-flex justify-content-between py-2 text-muted" style="font-size: 13px;">
                         <span>Status Sistem</span>

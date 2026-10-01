@@ -9,6 +9,9 @@
             <p>Kelola hak akses akun, tambah karyawan baru, dan atur status keaktifan akun toko DoughHeaven.</p>
         </div>
         <div class="d-flex align-items-center">
+            <a href="{{ route('subscribers.index') }}" class="btn btn-outline-secondary mr-2" style="border-radius: 10px; font-weight: 600;">
+                <i class="bi bi-envelope-heart-fill mr-1" style="color: #e75b7a;"></i> Kelola Pelanggan (Newsletter)
+            </a>
             <a href="{{ route('users.create') }}" class="btn btn-dh-primary">
                 <i class="bi bi-person-plus-fill mr-1.5"></i> Tambah Akun Baru
             </a>

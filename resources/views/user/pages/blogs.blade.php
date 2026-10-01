@@ -204,13 +204,40 @@
             <p class="text-pink-100 text-sm md:text-base mb-8 max-w-xl mx-auto leading-relaxed">
                 Dapatkan voucher diskon rahasia, pengumuman varian donat baru, dan tips baking langsung ke email Anda setiap minggu.
             </p>
-            <div class="flex flex-col sm:flex-row justify-center max-w-md mx-auto gap-2">
-                <input type="email" placeholder="Masukkan alamat email Anda..."
+            @if (session('newsletter_success'))
+                <div class="max-w-md mx-auto mb-6 p-4 rounded-2xl bg-white text-emerald-800 shadow-xl border-2 border-emerald-400 text-left animate-fade-in flex items-start gap-3">
+                    <span class="text-2xl flex-shrink-0">🎉</span>
+                    <div>
+                        <div class="font-bold text-sm text-emerald-900 mb-0.5">Langganan Berhasil!</div>
+                        <p class="text-xs text-emerald-700 leading-relaxed">{{ session('newsletter_success') }}</p>
+                    </div>
+                </div>
+            @endif
+
+            @if (session('newsletter_info'))
+                <div class="max-w-md mx-auto mb-6 p-4 rounded-2xl bg-white text-blue-800 shadow-xl border-2 border-blue-300 text-left animate-fade-in flex items-start gap-3">
+                    <span class="text-2xl flex-shrink-0">🍩</span>
+                    <div>
+                        <div class="font-bold text-sm text-blue-900 mb-0.5">Informasi Sahabat Manis</div>
+                        <p class="text-xs text-blue-700 leading-relaxed">{{ session('newsletter_info') }}</p>
+                    </div>
+                </div>
+            @endif
+
+            @error('email')
+                <div class="max-w-md mx-auto mb-4 p-3 rounded-2xl bg-white/95 text-pink-700 text-xs font-bold text-center shadow-lg">
+                    ⚠️ {{ $message }}
+                </div>
+            @enderror
+
+            <form action="{{ route('newsletter.subscribe') }}" method="POST" class="flex flex-col sm:flex-row justify-center max-w-md mx-auto gap-2">
+                @csrf
+                <input type="email" name="email" value="{{ old('email') }}" placeholder="Masukkan alamat email Anda..." required
                     class="px-5 py-3 rounded-full text-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white flex-1 shadow-md">
-                <button class="bg-gray-900 hover:bg-black text-white text-sm font-bold px-6 py-3 rounded-full transition shadow-md whitespace-nowrap">
+                <button type="submit" class="bg-gray-900 hover:bg-black text-white text-sm font-bold px-6 py-3 rounded-full transition shadow-md whitespace-nowrap transform hover:scale-105 active:scale-95 duration-200">
                     Langganan Gratis
                 </button>
-            </div>
+            </form>
             <p class="text-pink-200 text-xs mt-3">Kami menghargai privasi Anda. Tanpa spam, batalkan langganan kapan saja.</p>
         </div>
 
