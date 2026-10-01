@@ -56,10 +56,15 @@
                     </div>
 
                     <h5 class="font-weight-bold text-dark mb-1" style="font-size: 17px;">{{ $user->name }}</h5>
-                    <p class="text-muted mb-2" style="font-size: 13px;">{{ $user->email }}</p>
-                    <span class="badge-pill-custom badge-success-soft" style="font-size: 12px; padding: 6px 14px;">
-                        <i class="bi bi-shield-check mr-1"></i> Administrator DoughHeaven
-                    </span>
+                    @if ($user->isSuperAdmin())
+                        <span class="badge-pill-custom" style="background: #fdf2f8; color: #be185d; border: 1px solid #fbcfe8; font-size: 12px; padding: 5px 14px;">
+                            <i class="bi bi-shield-fill-check mr-1"></i> Super Administrator
+                        </span>
+                    @else
+                        <span class="badge-pill-custom badge-info-soft" style="font-size: 12px; padding: 5px 14px;">
+                            <i class="bi bi-person-badge mr-1"></i> Staff Admin Toko
+                        </span>
+                    @endif
                 </div>
 
                 <div class="px-3 pb-2">

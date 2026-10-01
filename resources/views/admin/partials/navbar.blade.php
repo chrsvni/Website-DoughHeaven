@@ -41,8 +41,8 @@
                             <div style="font-size: 13.5px; font-weight: 700; color: #1e293b;">
                                 {{ Auth::user()->name ?? 'Admin DoughHeaven' }}
                             </div>
-                            <div style="font-size: 11.5px; color: #e75b7a; font-weight: 600;">
-                                Administrator
+                            <div style="font-size: 11.5px; color: {{ Auth::user()->isSuperAdmin() ? '#be185d' : '#e75b7a' }}; font-weight: 700;">
+                                {{ Auth::user()->isSuperAdmin() ? 'Super Administrator' : 'Staff Admin Toko' }}
                             </div>
                         </div>
                         <i class="bi bi-chevron-down ml-1" style="font-size: 12px; color: #94a3b8;"></i>
@@ -52,12 +52,31 @@
                         <div class="px-3 py-2 border-bottom mb-1">
                             <p class="mb-0 font-weight-bold text-dark" style="font-size: 13px;">{{ Auth::user()->name }}</p>
                             <small class="text-muted">{{ Auth::user()->email }}</small>
+                            <div class="mt-1">
+                                @if (Auth::user()->isSuperAdmin())
+                                    <span class="badge-pill-custom" style="background: #fdf2f8; color: #be185d; font-size: 10.5px; padding: 2px 8px;">
+                                        Super Admin
+                                    </span>
+                                @else
+                                    <span class="badge-pill-custom badge-info-soft" style="font-size: 10.5px; padding: 2px 8px;">
+                                        Staff Admin
+                                    </span>
+                                @endif
+                            </div>
                         </div>
 
                         <a class="dropdown-item" href="{{ route('profile.edit') }}">
                             <i class="bi bi-person text-primary"></i>
-                            <span>Pengaturan Akun</span>
+                            <span>Pengaturan Profil</span>
                         </a>
+
+                        @if (Auth::user()->isSuperAdmin())
+                            <a class="dropdown-item" href="{{ route('users.index') }}">
+                                <i class="bi bi-people-fill" style="color: #be185d;"></i>
+                                <span>Kelola Pengguna</span>
+                            </a>
+                        @endif
+
                         <a class="dropdown-item" href="{{ route('home') }}" target="_blank">
                             <i class="bi bi-box-arrow-up-right text-info"></i>
                             <span>Halaman Pengunjung</span>

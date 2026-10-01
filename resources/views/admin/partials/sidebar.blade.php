@@ -9,7 +9,7 @@
                 <div class="name" title="{{ Auth::user()->name }}">{{ Auth::user()->name ?? 'Cheria Sevani' }}</div>
                 <div class="role d-flex align-items-center">
                     <span style="display:inline-block; width: 7px; height: 7px; border-radius: 50%; background: #10b981; margin-right: 5px;"></span>
-                    Admin DoughHeaven
+                    {{ Auth::user()->isSuperAdmin() ? 'Super Administrator' : 'Staff Admin Toko' }}
                 </div>
             </div>
         </div>
@@ -65,7 +65,20 @@
             </li>
         </ul>
 
-        <!-- Menu Group 4: Pengaturan -->
+        @if (Auth::user()->isSuperAdmin())
+            <!-- Menu Group 4: Khusus Super Admin -->
+            <div class="sidebar-heading mt-3" style="color: #be185d;">Super Admin</div>
+            <ul class="nav">
+                <li class="nav-item {{ request()->routeIs('users.*') ? 'active' : '' }}">
+                    <a href="{{ route('users.index') }}">
+                        <i class="bi bi-people-fill"></i>
+                        <p>Kelola Pengguna</p>
+                    </a>
+                </li>
+            </ul>
+        @endif
+
+        <!-- Menu Group 5: Pengaturan -->
         <div class="sidebar-heading mt-3">Pengaturan</div>
         <ul class="nav">
             <li class="nav-item {{ request()->routeIs('profile.*') ? 'active' : '' }}">

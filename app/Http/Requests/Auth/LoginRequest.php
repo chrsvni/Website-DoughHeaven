@@ -49,6 +49,17 @@ class LoginRequest extends FormRequest
             ]);
         }
 
+        // Cek status keaktifan akun
+        $user = Auth::user();
+        if ($user && ! $user->isActive()) {
+            Auth::logout();
+            RateLimiter::hit($this->throttleKey());
+
+            throw ValidationException::withMessages([
+                'email' => 'Akun Anda sedang dinonaktifkan oleh Super Administrator. Silakan hubungi pengelola toko DoughHeaven.',
+            ]);
+        }
+
         RateLimiter::clear($this->throttleKey());
     }
 
