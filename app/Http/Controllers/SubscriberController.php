@@ -86,7 +86,8 @@ class SubscriberController extends Controller
 
         if ($request->filled('search')) {
             $search = $request->search;
-            $query->where('email', 'like', "%{$search}%");
+            $like = config('database.default') === 'pgsql' ? 'ilike' : 'like';
+            $query->where('email', $like, "%{$search}%");
         }
 
         if ($request->filled('status') && in_array($request->status, ['aktif', 'nonaktif'])) {

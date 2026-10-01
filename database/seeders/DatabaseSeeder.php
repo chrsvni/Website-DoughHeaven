@@ -24,6 +24,8 @@ class DatabaseSeeder extends Seeder
             [
                 'name' => 'Admin DoughHeaven',
                 'password' => Hash::make('admin123'),
+                'role' => 'admin',
+                'status' => 'aktif',
             ]
         );
 
@@ -32,6 +34,8 @@ class DatabaseSeeder extends Seeder
             [
                 'name' => 'Cheria Apiani',
                 'password' => Hash::make('admin123'),
+                'role' => 'super_admin',
+                'status' => 'aktif',
             ]
         );
 
