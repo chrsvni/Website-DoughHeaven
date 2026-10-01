@@ -174,6 +174,7 @@ class DatabaseSeeder extends Seeder
             [
                 'nama' => 'Sevani Apiani',
                 'subjek' => 'Donat Terenak di Bandung!',
+                'tampilkan' => true,
                 'created_at' => now()->subDays(3),
                 'updated_at' => now()->subDays(3),
             ]
@@ -187,6 +188,7 @@ class DatabaseSeeder extends Seeder
             [
                 'nama' => 'Rizky Pratama',
                 'subjek' => 'Paling Favorit Buat Rapat Kantor',
+                'tampilkan' => true,
                 'created_at' => now()->subDays(7),
                 'updated_at' => now()->subDays(7),
             ]
@@ -200,6 +202,7 @@ class DatabaseSeeder extends Seeder
             [
                 'nama' => 'Nadia Safitri',
                 'subjek' => 'Packaging Cantik & Pelayanan Ramah',
+                'tampilkan' => true,
                 'created_at' => now()->subDays(12),
                 'updated_at' => now()->subDays(12),
             ]

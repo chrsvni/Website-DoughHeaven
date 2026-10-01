@@ -43,7 +43,8 @@
                                         <th>Subjek Pesan</th>
                                         <th>Isi Ulasan</th>
                                         <th>Waktu Kirim</th>
-                                        <th style="width: 120px;" class="text-center">Aksi</th>
+                                        <th style="width: 140px;" class="text-center">Status Web</th>
+                                        <th style="width: 210px;" class="text-center">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -66,7 +67,7 @@
                                                 </span>
                                             </td>
                                             <td>
-                                                <div class="text-dark" style="font-size: 13.5px; max-width: 320px;">
+                                                <div class="text-dark" style="font-size: 13.5px; max-width: 300px;">
                                                     {{ $ulasan->isi }}
                                                 </div>
                                             </td>
@@ -77,20 +78,46 @@
                                                 </span>
                                             </td>
                                             <td class="text-center">
-                                                <form action="{{ route('ulasan.destroy', $ulasan->id) }}" method="POST"
-                                                    style="display: inline;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-outline-danger btn-sm btn-sm-action"
-                                                        onclick="return confirm('Yakin ingin menghapus ulasan dari {{ $ulasan->nama }}?')">
-                                                        <i class="bi bi-trash"></i> Hapus
-                                                    </button>
-                                                </form>
+                                                @if ($ulasan->tampilkan)
+                                                    <span class="badge-pill-custom badge-success-soft" style="font-size: 12px; padding: 5px 12px;">
+                                                        <i class="bi bi-check-circle-fill mr-1"></i> Tampil
+                                                    </span>
+                                                @else
+                                                    <span class="badge-pill-custom badge-warning-soft" style="font-size: 12px; padding: 5px 12px;">
+                                                        <i class="bi bi-hourglass-split mr-1"></i> Menunggu
+                                                    </span>
+                                                @endif
+                                            </td>
+                                            <td class="text-center">
+                                                <div class="d-inline-flex align-items-center">
+                                                    <form action="{{ route('ulasan.toggle', $ulasan->id) }}" method="POST" style="display: inline;" class="mr-1">
+                                                        @csrf
+                                                        @method('PATCH')
+                                                        @if ($ulasan->tampilkan)
+                                                            <button type="submit" class="btn btn-outline-secondary btn-sm btn-sm-action" title="Sembunyikan ulasan dari halaman user">
+                                                                <i class="bi bi-eye-slash"></i> Sembunyikan
+                                                            </button>
+                                                        @else
+                                                            <button type="submit" class="btn btn-outline-success btn-sm btn-sm-action font-weight-bold" title="Tampilkan ulasan ke halaman user">
+                                                                <i class="bi bi-eye"></i> Tampilkan
+                                                            </button>
+                                                        @endif
+                                                    </form>
+                                                    <form action="{{ route('ulasan.destroy', $ulasan->id) }}" method="POST"
+                                                        style="display: inline;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-outline-danger btn-sm btn-sm-action"
+                                                            onclick="return confirm('Yakin ingin menghapus ulasan dari {{ $ulasan->nama }}?')">
+                                                            <i class="bi bi-trash"></i> Hapus
+                                                        </button>
+                                                    </form>
+                                                </div>
                                             </td>
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="5" class="text-center py-5 text-muted">
+                                            <td colspan="6" class="text-center py-5 text-muted">
                                                 <i class="bi bi-chat-heart" style="font-size: 40px; color: #cbd5e1;"></i>
                                                 <p class="mt-2 mb-0">Belum ada feedback atau ulasan dari pelanggan.</p>
                                             </td>

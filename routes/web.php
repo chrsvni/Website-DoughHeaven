@@ -41,6 +41,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('blog', BlogController::class);
     Route::post('blog/upload-image', [BlogController::class, 'uploadImage'])->name('blog.upload-image');
     Route::get('/admin/ulasan', [UlasanController::class, 'index'])->name('ulasan.index');
+    Route::patch('/admin/ulasan/{id}/toggle', [UlasanController::class, 'toggleTampilkan'])->name('ulasan.toggle');
     Route::delete('/admin/ulasan/{id}', [UlasanController::class, 'destroy'])->name('ulasan.destroy');
 });
 

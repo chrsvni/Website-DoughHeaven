@@ -15,8 +15,8 @@ class HomeController extends Controller
         $favoriteMenus = Produk::where('rekomendasi', '=', 'rekomendasi')->with('kategori')->get();
         // Ambil 2 promosi paling baru yang ada di database
         $latestPromos = Promosi::with('produks')->latest()->take(2)->get();
-        // Ambil ulasan nyata pelanggan untuk ditampilkan di homepage
-        $ulasans = Ulasan::latest()->take(3)->get();
+        // Ambil ulasan pelanggan yang sudah disetujui (tampilkan = true) untuk ditampilkan di homepage
+        $ulasans = Ulasan::where('tampilkan', true)->latest()->take(3)->get();
         // Ambil artikel blog terbaru
         $latestBlogs = Blog::latest('tanggal')->take(3)->get();
 

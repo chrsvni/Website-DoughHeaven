@@ -15,8 +15,10 @@ class Ulasan extends Model
         'email',
         'subjek',
         'isi',
+        'tampilkan',
     ];
     protected $casts = [
+        'tampilkan' => 'boolean',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
